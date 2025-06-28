@@ -4,8 +4,9 @@ import PublicPage from './pages/PublicPage';
 import Login from './pages/Login';
 import DashboardLayout from './components/DashboardLayout';
 import MyLinks from './pages/MyLinks';
-import AddLinkPage from './pages/AddLinkPage'; // ✅ new
-import Settings from './pages/Settings';       // ✅ new
+import AddLinkPage from './pages/AddLinkPage'; 
+import Settings from './pages/Settings';     
+import DashboardContacts from './components/DashboardContacts';  
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -25,6 +26,7 @@ function App() {
           <Route index element={<MyLinks />} />
           <Route path="add" element={<AddLinkPage />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="contacts" element={<DashboardContacts />} />
         </Route>
       </Routes>
     </Router>

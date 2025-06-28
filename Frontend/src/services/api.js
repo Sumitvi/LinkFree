@@ -12,5 +12,13 @@ export const getUserLinks = async (username) => {
   }
 };
 
+export const getLinkAnalytics = async (linkId) => {
+  const res = await fetch(`http://localhost:8080/api/links/${linkId}/analytics`);
+  if (!res.ok) throw new Error("Failed to fetch analytics");
+  return await res.json(); // returns number
+};
+
+
+
 
 

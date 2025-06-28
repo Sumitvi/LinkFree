@@ -1,23 +1,47 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import DashboardHeader from '../components/DashboardHeader';
 
 const DashboardLayout = () => {
-  return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white p-4 space-y-4">
-        <h2 className="text-xl font-bold mb-6">📌 Dashboard</h2>
-        <nav className="space-y-2">
-          <Link to="/dashboard" className="block hover:underline">My Links</Link>
-          <Link to="/dashboard/add" className="block hover:underline">Add New Link</Link>
-          <Link to="/dashboard/settings" className="block hover:underline">Settings</Link>
-        </nav>
-      </aside>
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-100">
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    const storedAvatar = localStorage.getItem("avatarUrl");
+    setUsername(storedUsername);
+    setAvatarUrl(storedAvatar || `https://ui-avatars.com/api/?name=${storedUsername}`);
+  }, []);
+
+  const handleProfileClick = () => {
+    if (username) navigate(`/user/${username}`);
+  };
+
+  return (
+    <div className="flex min-h-screen">
+      
+      {/* Sidebar */}
+      <div className="w-60 bg-gray-800 text-white p-4 flex flex-col justify-between">
+        <div>
+          <h1 className="text-2xl font-bold mb-6">📌 Dashboard</h1>
+          <nav className="flex flex-col gap-3">
+            <NavLink to="/dashboard" className="hover:underline">My Links</NavLink>
+            <NavLink to="/dashboard/add" className="hover:underline">Add New Link</NavLink>
+            <NavLink to="/dashboard/settings" className="hover:underline">Settings</NavLink>
+            <NavLink to="/dashboard/contacts" className="hover:underline">Contacts</NavLink>
+
+          </nav>
+        </div>
+
+       
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 p-6 bg-gray-100">
+        <DashboardHeader /> 
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 };
