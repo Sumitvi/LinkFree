@@ -24,6 +24,8 @@ public class Link {
     private String type; // link, video, social, tip, affiliate, product
     private boolean isActive;
     private int positionOrder;
+
+    @Column
     private int clickCount;
 
     private LocalDateTime createdAt;
@@ -33,4 +35,7 @@ public class Link {
 
     @JsonIgnoreProperties("links")
     private User user;
+
+    @Column(name = "qr_enabled")
+    private boolean qrEnabled;
 }

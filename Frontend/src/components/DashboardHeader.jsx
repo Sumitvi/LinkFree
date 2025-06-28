@@ -23,6 +23,8 @@ const DashboardHeader = () => {
 
   return (
     <div className="flex justify-end items-center p-4 bg-white shadow">
+
+      <h2 className="text-xl font-semibold flex justify-between items-center px-6 py-4 left-70 absolute" >Welcome, @{username}</h2>
       <div
         className="cursor-pointer flex items-center gap-2"
         onClick={() => navigate(`/u/${username}`)}

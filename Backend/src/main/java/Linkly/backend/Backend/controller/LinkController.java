@@ -7,14 +7,17 @@ import Linkly.backend.Backend.repositories.ClickLogRepository;
 import Linkly.backend.Backend.repositories.LinkRepository;
 import Linkly.backend.Backend.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
+import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.*;
 
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -94,5 +97,84 @@ public class LinkController {
         linkRepo.deleteById(id);
         return ResponseEntity.ok("Deleted");
     }
+
+    @Transactional
+    @GetMapping("/redirect/{linkId}")
+    public ResponseEntity<Void> redirectTo(@PathVariable UUID linkId) {
+        Optional<Link> linkOpt = linkRepo.findById(linkId);
+        if (linkOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Link link = linkOpt.get();
+        link.setClickCount(link.getClickCount() + 1);
+        linkRepo.save(link);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(link.getUrl()));
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/{linkId}/analytics/daily")
+    public ResponseEntity<Map<String, Long>> getDailyClicks(@PathVariable UUID linkId) {
+        LocalDateTime from = LocalDateTime.now().minusDays(28);
+        List<Object[]> results = clickRepo.countClicksByDay(linkId, from);
+
+        Map<String, Long> dailyCounts = new LinkedHashMap<>();
+        for (Object[] row : results) {
+            String day = row[0].toString();
+            Long count = (Long) row[1];
+            dailyCounts.put(day, count);
+        }
+
+        return ResponseEntity.ok(dailyCounts);
+    }
+
+
+    @GetMapping("/analytics/{linkId}/last28days")
+    public ResponseEntity<List<DayClick>> getClicksLast28Days(@PathVariable UUID linkId) {
+        LocalDateTime from = LocalDateTime.now().minusDays(27).withHour(0).withMinute(0);
+        List<Object[]> rawData = clickRepo.countClicksPerDay(linkId, from);
+
+        List<DayClick> results = rawData.stream()
+                .map(row -> new DayClick(row[0].toString(), ((Number) row[1]).longValue()))
+                .toList();
+
+        return ResponseEntity.ok(results);
+    }
+
+    public record DayClick(String date, Long count) {}
+
+
+    // In LinkController.java
+    @GetMapping("/clicks-summary/{username}")
+    public ResponseEntity<List<Map<String, Object>>> getClicksSummary(@PathVariable String username) {
+        List<Link> links = linkRepo.findAllByUser_UsernameOrderByPositionOrder(username);
+        List<Map<String, Object>> summary = links.stream().map(link -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("title", link.getTitle());
+            map.put("clickCount", link.getClickCount());
+            return map;
+        }).toList();
+        return ResponseEntity.ok(summary);
+    }
+
+
+//    @PutMapping("/{id}/qr")
+//    public ResponseEntity<?> toggleQrCode(@PathVariable UUID id, @RequestParam boolean enabled) {
+//        Optional<Link> linkOptional = linkRepo.findById(id);
+//        if (linkOptional.isPresent()) {
+//            Link link = linkOptional.get();
+//            link.setQrEnabled(enabled);
+//            linkRepo.save(link);
+//            return ResponseEntity.ok("QR code " + (enabled ? "enabled" : "disabled") + " for link ID: " + id);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Link not found");
+//        }
+//    }
+
+
+
+
 
 }

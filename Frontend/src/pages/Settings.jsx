@@ -99,7 +99,7 @@ const Settings = () => {
             <option value="ocean">Ocean</option>
             <option value="pastel">Minimalist</option>
             <option value="ocean">Retro</option>
-            
+
           </select>
 
         </div>
@@ -144,6 +144,9 @@ const Settings = () => {
             ))}
           </select>
         </div>
+
+
+        
 
         {/* Submit */}
         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full" disabled={saving}>

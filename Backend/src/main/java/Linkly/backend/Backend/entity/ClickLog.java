@@ -23,6 +23,8 @@ public class ClickLog {
     private UUID linkId;
     private LocalDateTime clickedAt;
     private String deviceInfo;
+    private LocalDateTime timestamp;
+
 
     public ClickLog(UUID linkId, LocalDateTime clickedAt, String deviceInfo) {
         this.linkId = linkId;

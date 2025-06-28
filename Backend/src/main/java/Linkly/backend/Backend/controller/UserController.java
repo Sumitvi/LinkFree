@@ -30,9 +30,29 @@ public class UserController {
             user.setBio(updatedUser.getBio());
             user.setAvatarUrl(updatedUser.getAvatarUrl());
             user.setTheme(updatedUser.getTheme());
+
+            // 👇 Add these to save social links
+            user.setGithub(updatedUser.getGithub());
+            user.setLinkedin(updatedUser.getLinkedin());
+            user.setInstagram(updatedUser.getInstagram());
+            user.setTwitter(updatedUser.getTwitter());
+            user.setButtonShape(updatedUser.getButtonShape());
+            user.setButtonShape(updatedUser.getButtonShape());
+            user.setButtonSize(updatedUser.getButtonSize());
+            user.setButtonColor(updatedUser.getButtonColor());
+            user.setFontStyle(updatedUser.getFontStyle());
+            user.setBackgroundGradient(updatedUser.getBackgroundGradient());
+
+            user.setLogoUrl(updatedUser.getLogoUrl());
+            user.setBackgroundImageUrl(updatedUser.getBackgroundImageUrl());
+            user.setCustomCss(updatedUser.getCustomCss());
+
+
+
             return userRepository.save(user);
         }).orElseThrow(() -> new RuntimeException("User not found"));
     }
+
 
     @GetMapping("/{username}")
     public ResponseEntity<User> getUser(@PathVariable String username) {
@@ -40,5 +60,9 @@ public class UserController {
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+
+
+
 
 }

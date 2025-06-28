@@ -12,7 +12,6 @@ const PublicPage = () => {
   const [loading, setLoading] = useState(true);
   const [showContact, setShowContact] = useState(false);
 
-
   useEffect(() => {
     const fetchLinks = async () => {
       try {
@@ -20,8 +19,6 @@ const PublicPage = () => {
         setLinks(data);
         if (data.length > 0 && data[0].user) {
           setUser(data[0].user);
-          console.log("USER THEME DATA:", data[0].user);
-
         } else {
           setUser(null);
         }
@@ -45,7 +42,10 @@ const PublicPage = () => {
     buttonSize = "md",
     buttonColor = "bg-white",
     fontStyle = "sans",
-    backgroundGradient = ""
+    backgroundGradient = "",
+    backgroundImageUrl = "",
+    logoUrl = "",
+    customCss = ""
   } = user;
 
   const theme = themes[themeKey] || themes["light"];
@@ -55,20 +55,38 @@ const PublicPage = () => {
       className={`
         min-h-screen flex flex-col items-center justify-start p-4 
         font-${fontStyle} 
-        ${backgroundGradient ? `bg-gradient-to-b ${backgroundGradient}` : theme.background} 
+        ${backgroundGradient ? `bg-gradient-to-b ${backgroundGradient}` : theme.background}
         ${theme.text}
       `}
+      style={{
+        backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
-      <div className="max-w-md w-full mt-6 text-center">
+      {/* Inject custom CSS if any */}
+      {customCss && <style dangerouslySetInnerHTML={{ __html: customCss }} />}
+
+      <div className="max-w-md w-full mt-6 text-center bg-white bg-opacity-80 p-4 rounded">
+        {/* User Logo */}
+        {logoUrl && (
+          <img
+            src={logoUrl}
+            alt="Logo"
+            className="w-20 h-20 object-contain mx-auto mb-3"
+          />
+        )}
+
+        {/* Avatar and Username */}
         <img
           src={user.avatarUrl || `https://ui-avatars.com/api/?name=${username}`}
           alt="avatar"
           className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white"
         />
         <h2 className="text-2xl font-bold">@{user.username}</h2>
-        {user.bio && <p className="mt-2 text-gray-300">{user.bio}</p>}
+        {user.bio && <p className="mt-2 text-gray-700">{user.bio}</p>}
 
-        {/* 👇 Social Icons */}
+        {/* Social Icons */}
         <div className="flex justify-center space-x-4 text-2xl mt-4">
           {user.github && (
             <a href={user.github} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400">
@@ -92,24 +110,24 @@ const PublicPage = () => {
           )}
         </div>
 
-        {/* 👇 Link Cards */}
+        {/* Link Cards */}
         <div className="mt-6 space-y-3">
-          {links.map((link) => (
+          {links.map(link => (
             <LinkCard
               key={link.id}
               link={link}
               theme={theme}
-              shape={user.buttonShape}
-              size={user.buttonSize}
-              color={user.buttonColor}
-              font={user.fontStyle}
-              gradient={user.backgroundGradient}
+              shape={buttonShape}
+              size={buttonSize}
+              color={buttonColor}
+              font={fontStyle}
+              gradient={backgroundGradient}
             />
           ))}
         </div>
 
-
-        <div className="mt-8 w-full max-w-md">
+        {/* Contact Form Toggle */}
+        <div className="mt-8 w-full">
           <button
             onClick={() => setShowContact(prev => !prev)}
             className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded w-full shadow font-semibold"

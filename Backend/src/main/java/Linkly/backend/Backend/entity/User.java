@@ -31,4 +31,37 @@ public class User {
 
     @Column
     private String theme;
+
+    @Column(name = "github")
+    private String github;
+
+    @Column(name = "linkedin")
+    private String linkedin;
+
+    @Column(name = "instagram")
+    private String instagram;
+
+    @Column(name = "twitter")
+    private String twitter;
+
+    @Column(name = "button_shape")
+    private String buttonShape;
+
+         // "rounded", "square"
+    @Column private String buttonSize;
+    @Column private String buttonColor;
+    @Column private String fontStyle;
+    @Column private String backgroundGradient;
+
+    // User.java
+    private String logoUrl;
+    private String backgroundImageUrl;
+    private String customCss;
+
+
+
+
+
+
+
 }

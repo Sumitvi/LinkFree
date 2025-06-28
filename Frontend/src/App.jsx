@@ -7,6 +7,10 @@ import MyLinks from './pages/MyLinks';
 import AddLinkPage from './pages/AddLinkPage'; 
 import Settings from './pages/Settings';     
 import DashboardContacts from './components/DashboardContacts';  
+import DashboardQrPage from './pages/DashboardQrPage';
+// import Dashboard from './pages/Dashboard';
+
+
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -27,6 +31,8 @@ function App() {
           <Route path="add" element={<AddLinkPage />} />
           <Route path="settings" element={<Settings />} />
           <Route path="contacts" element={<DashboardContacts />} />
+          <Route path="/dashboard/qr" element={<DashboardQrPage />} />
+
         </Route>
       </Routes>
     </Router>
