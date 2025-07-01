@@ -31,7 +31,10 @@ const DashboardLayout = () => {
             <NavLink to="/dashboard/add" className="hover:underline">Add New Link</NavLink>
             <NavLink to="/dashboard/settings" className="hover:underline">Settings</NavLink>
             <NavLink to="/dashboard/contacts" className="hover:underline">Contacts</NavLink>
-            <NavLink to="/dashboard/qr" className="hover:underline">QR Codes</NavLink>
+            <NavLink to="/dashboard/protected-links" className="hover:underline">Protected Links</NavLink>
+            <NavLink to="/dashboard/shorten" className="hover:underline">Shorten URL</NavLink>
+
+
 
           </nav>
         </div>
