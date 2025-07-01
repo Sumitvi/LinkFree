@@ -36,6 +36,7 @@ public class Link {
     @JsonIgnoreProperties("links")
     private User user;
 
-    @Column(name = "qr_enabled")
-    private boolean qrEnabled;
+    @Column(name = "link_password")
+    private String password;
+
 }

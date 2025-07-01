@@ -173,6 +173,57 @@ public class LinkController {
 //        }
 //    }
 
+    @PutMapping("/{id}/password")
+    public ResponseEntity<?> setLinkPassword(@PathVariable UUID id, @RequestBody Map<String, String> body) {
+        String password = body.get("password");
+        return linkRepo.findById(id).map(link -> {
+            link.setPassword(password);
+            return ResponseEntity.ok(linkRepo.save(link));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+
+//    @PostMapping("/{id}/verify-password")
+//    public ResponseEntity<?> verifyPassword(@PathVariable UUID id, @RequestBody Map<String, String> body) {
+//        String entered = body.get("password");
+//        return linkRepo.findById(id).map(link -> {
+//            if (link.getPassword() != null && link.getPassword().equals(entered)) {
+//                return ResponseEntity.ok("Access granted");
+//            } else {
+//                return ResponseEntity.status(403).body("Invalid password");
+//            }
+//        }).orElse(ResponseEntity.notFound().build());
+//    }
+
+
+    @PostMapping("/verify-password/{linkId}")
+    public ResponseEntity<?> verifyPassword(
+            @PathVariable UUID linkId,
+            @RequestBody Map<String, String> body
+    ) {
+        String password = body.get("password");
+        Link link = linkRepo.findById(linkId)
+                .orElseThrow(() -> new RuntimeException("Link not found"));
+
+        // Debug
+        System.out.println("Stored password: [" + link.getPassword() + "]");
+        System.out.println("Entered password: [" + password + "]");
+        System.out.println("Match: " + link.getPassword().equals(password));
+
+        if (link.getPassword() == null || link.getPassword().isEmpty()) {
+            return ResponseEntity.badRequest().body("This link is not password protected");
+        }
+
+        if (!link.getPassword().equals(password)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
+        }
+
+        return ResponseEntity.ok(Map.of("redirectUrl", link.getUrl()));
+    }
+
+
+
+
 
 
 

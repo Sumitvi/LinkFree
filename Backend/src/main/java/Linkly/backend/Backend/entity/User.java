@@ -1,5 +1,6 @@
 package Linkly.backend.Backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,9 @@ public class User {
     @Column(unique = true)
     private String username;
 
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String password;
 //    private String theme;
     private String avatarUrl;
@@ -57,6 +60,8 @@ public class User {
     private String logoUrl;
     private String backgroundImageUrl;
     private String customCss;
+
+    private String fullName;
 
 
 

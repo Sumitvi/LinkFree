@@ -2,6 +2,15 @@ import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import DashboardHeader from '../components/DashboardHeader';
 import ClickGraph from '../components/ClickGraph';
+import {
+  LayoutDashboard,
+  Link2,
+  Plus,
+  Settings,
+  Users,
+  Shield,
+  Link,
+} from 'lucide-react';
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
@@ -17,45 +26,72 @@ const DashboardLayout = () => {
   }, []);
 
   const handleProfileClick = () => {
-    if (username) navigate(`/user/${username}`);
+    if (username) navigate(`//${username}`);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="w-60 bg-gray-800 text-white p-4 flex flex-col justify-between">
+      <aside className="w-64 bg-white shadow-md p-6 hidden md:flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-bold mb-6">📌 Dashboard</h1>
-          <nav className="flex flex-col gap-3">
-            <NavLink to="/dashboard" className="hover:underline">My Links</NavLink>
-            <NavLink to="/dashboard/add" className="hover:underline">Add New Link</NavLink>
-            <NavLink to="/dashboard/settings" className="hover:underline">Settings</NavLink>
-            <NavLink to="/dashboard/contacts" className="hover:underline">Contacts</NavLink>
-            <NavLink to="/dashboard/protected-links" className="hover:underline">Protected Links</NavLink>
-            <NavLink to="/dashboard/shorten" className="hover:underline">Shorten URL</NavLink>
+          <div className="flex items-center gap-3 mb-8">
+            <img
+              src={avatarUrl}
+              alt="avatar"
+              className="h-10 w-10 rounded-full cursor-pointer"
+              onClick={handleProfileClick}
+            />
+            <div>
+              <p className="font-semibold text-gray-700">Welcome</p>
+              <p className="text-sm text-gray-500">{username}</p>
+            </div>
+          </div>
 
-
-
+          <nav className="space-y-4 text-gray-700">
+            <NavItem to="/dashboard" icon={<LayoutDashboard size={18} />}>My Links</NavItem>
+            <NavItem to="/dashboard/add" icon={<Plus size={18} />}>Add New Link</NavItem>
+            <NavItem to="/dashboard/settings" icon={<Settings size={18} />}>Settings</NavItem>
+            <NavItem to="/dashboard/contacts" icon={<Users size={18} />}>Contacts</NavItem>
+            <NavItem to="/dashboard/protected-links" icon={<Shield size={18} />}>Protected Links</NavItem>
+            <NavItem to="/dashboard/shorten" icon={<Link2 size={18} />}>Shorten URL</NavItem>
           </nav>
         </div>
-      </div>
+
+        <div className="text-xs text-gray-400 text-center mt-4">
+          © 2025 LinkFree
+        </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <main className="flex-1 p-4 sm:p-6 bg-white">
         <DashboardHeader />
 
-        {/* 👇 Show Click Graph only on /dashboard */}
+        {/* Show Click Graph only on /dashboard */}
         {location.pathname === "/dashboard" && (
           <div className="mb-8">
-            {/* <h1 className="text-3xl font-bold mb-4">Welcome to Your Dashboard</h1> */}
             <ClickGraph username={username} />
           </div>
         )}
 
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 };
+
+// Reusable NavItem component
+const NavItem = ({ to, icon, children }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+        isActive ? 'bg-orange-100 text-orange-600 font-medium' : 'hover:bg-gray-100'
+      }`
+    }
+  >
+    {icon}
+    <span>{children}</span>
+  </NavLink>
+);
 
 export default DashboardLayout;

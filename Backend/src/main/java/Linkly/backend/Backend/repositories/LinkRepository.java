@@ -14,5 +14,7 @@ public interface LinkRepository extends JpaRepository<Link, UUID> {
     List<Link> findAllByUser_UsernameAndIsActiveTrueOrderByPositionOrder(String username);
 
 //    List<Link> findByUserId(UUID userId);
+      Optional<Link> findById(UUID id);
+
 
 }
