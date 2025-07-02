@@ -1,17 +1,23 @@
-# Use official Java image
-FROM openjdk:17-jdk-alpine
-
-# Set working directory
+# ----------- BUILD STAGE -----------
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy everything from your project into the container
+# Copy all project files into container
 COPY . .
 
-# Give execute permission to mvnw
-RUN chmod +x mvnw
+# Package the app (skip tests for faster builds)
+RUN mvn clean package -DskipTests
 
-# Build the app (skip tests to make build faster)
-RUN ./mvnw clean install -DskipTests
+# ----------- RUNTIME STAGE -----------
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
 
-# Run the JAR file
-CMD ["java", "-jar", "target/*.jar"]
+# Copy the jar built from the previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Render expects the service to run on port 10000
+ENV PORT=10000
+EXPOSE 10000
+
+# Start the Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]
