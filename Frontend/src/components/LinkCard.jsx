@@ -6,6 +6,7 @@ import {
   FaGithub,
   FaYoutube
 } from 'react-icons/fa';
+import FlashMessage from './FlashMessage'; // Adjust path if needed
 
 const LinkCard = ({
   link,
@@ -21,6 +22,7 @@ const LinkCard = ({
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [enteredPassword, setEnteredPassword] = useState('');
   const [error, setError] = useState('');
+  const [flash, setFlash] = useState(null);
 
   const backendBaseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
@@ -68,38 +70,37 @@ const LinkCard = ({
   `;
 
   const handleProtectedClick = async () => {
-  if (!enteredPassword) {
-    setError("Please enter a password.");
-    return;
-  }
-
-  const trimmedPassword = enteredPassword.trim();
-  console.log("Sending password:", JSON.stringify({ password: trimmedPassword }));
-
-  try {
-    const res = await fetch(`${backendBaseUrl}/api/links/verify-password/${link.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ password: trimmedPassword }),
-    });
-
-    if (res.ok) {
-      const { redirectUrl } = await res.json();
-      window.open(redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`, "_blank");
-      setShowPasswordInput(false);
-      setEnteredPassword("");
-      setError("");
-    } else {
-      const err = await res.text();
-      setError(err || "Invalid password");
+    if (!enteredPassword) {
+      setError("Please enter a password.");
+      return;
     }
-  } catch (err) {
-    setError("Something went wrong.");
-  }
-};
 
+    const trimmedPassword = enteredPassword.trim();
+
+    try {
+      const res = await fetch(`${backendBaseUrl}/api/links/verify-password/${link.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password: trimmedPassword }),
+      });
+
+      if (res.ok) {
+        const { redirectUrl } = await res.json();
+        window.open(redirectUrl.startsWith("http") ? redirectUrl : `https://${redirectUrl}`, "_blank");
+        setShowPasswordInput(false);
+        setEnteredPassword("");
+        setError("");
+        setFlash({ type: 'success', message: '🔓 Access granted!' });
+      } else {
+        const err = await res.text();
+        setFlash({ type: 'error', message: err || "Invalid password" });
+      }
+    } catch (err) {
+      setFlash({ type: 'error', message: "Something went wrong." });
+    }
+  };
 
   if (link.type === 'video') {
     const embedUrl = link.url.includes("youtube.com/watch?v=")
@@ -120,6 +121,8 @@ const LinkCard = ({
 
   return (
     <div className="mb-4">
+      {flash && <FlashMessage type={flash.type} message={flash.message} />}
+
       {!link.password ? (
         <a
           href={link.url.startsWith('http') ? link.url : `https://${link.url}`}
@@ -147,15 +150,14 @@ const LinkCard = ({
                 value={enteredPassword}
                 onChange={(e) => setEnteredPassword(e.target.value)}
                 placeholder="Enter password"
-                className="w-full border p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded focus:ring focus:ring-blue-400"
               />
               <button
                 onClick={handleProtectedClick}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded"
+                 className={finalClasses}
               >
                 Unlock
               </button>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
             </div>
           )}
         </>

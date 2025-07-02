@@ -33,10 +33,11 @@ function App() {
         }>
           <Route index element={<MyLinks />} />
           <Route path="add" element={<AddLinkPage />} />
-          <Route path="settings" element={<Settings />} />
           <Route path="contacts" element={<DashboardContacts />} />
           <Route path="protected-links" element={<ProtectedLinks />} />
           <Route path="shorten" element={<Shortener />} />
+          <Route path="settings" element={<Settings />} />
+
         </Route>
       </Routes>
     </Router>

@@ -32,9 +32,13 @@ const DashboardHeader = () => {
   return (
     <header className="flex justify-between items-center mb-6 px-4 sm:px-6 py-3 border-b bg-white rounded-md shadow-sm">
       {/* Left: Welcome */}
-      <h1 className="text-lg sm:text-xl font-semibold text-gray-700">
-        Welcome, <span className="text-orange-600">@{username}</span>
-      </h1>
+      {/* <h1 className="text-lg sm:text-xl font-semibold text-gray-700 text-center left-20">
+        Welcome, <span className="text-orange-600 ">@{username}</span>
+      </h1> */}
+
+      <h1 className="text-lg sm:text-xl font-semibold text-gray-700 text-center  pl-6 md:pl-0">
+  Welcome, <span className="text-orange-600">@{username}</span>
+</h1>
 
       {/* Right: Avatar + Logout */}
       <div className="flex items-center gap-4">

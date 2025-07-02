@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import FlashMessage from '../components/FlashMessage'; // ✅ assuming this exists in your project
 
 const Settings = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [flash, setFlash] = useState(null); // ✅ for flash messages
 
   const username = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchUser = async () => {
       if (!username) {
-        alert("Username not found in localStorage!");
+        setFlash({ type: 'error', message: 'Username not found in localStorage!' });
         return;
       }
 
@@ -20,6 +22,7 @@ const Settings = () => {
         setUser(res.data);
       } catch (err) {
         console.error("Error fetching user info:", err);
+        setFlash({ type: 'error', message: 'Failed to fetch user details' });
       } finally {
         setLoading(false);
       }
@@ -38,10 +41,10 @@ const Settings = () => {
     setSaving(true);
     try {
       await axios.put(`http://localhost:8080/api/users/${user.id}`, user);
-      alert("✅ Profile updated successfully!");
+      setFlash({ type: 'success', message: '✅ Profile updated successfully!' });
     } catch (err) {
       console.error("❌ Update failed:", err);
-      alert("Failed to update profile.");
+      setFlash({ type: 'error', message: 'Failed to update profile.' });
     } finally {
       setSaving(false);
     }
@@ -58,86 +61,161 @@ const Settings = () => {
   if (!user) return <div className="text-center text-red-500 mt-10">User not found!</div>;
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 shadow rounded mt-6">
-      <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Basic Info */}
+    <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md mt-6">
+      <h2 className="text-3xl font-bold text-orange-600 mb-6 text-center">Profile Settings</h2>
+
+      {flash && <FlashMessage type={flash.type} message={flash.message} />}
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+
+        {/* Username */}
         <div>
-          <label className="block mb-1 font-medium">Username</label>
-          <input type="text" name="username" value={user.username} disabled className="w-full border p-2 bg-gray-100" />
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Username</label>
+          <input
+            type="text"
+            name="username"
+            value={user.username}
+            disabled
+            className="w-full bg-gray-100 border border-gray-300 p-2 rounded-md text-gray-600"
+          />
         </div>
 
+        {/* Email */}
         <div>
-          <label className="block mb-1 font-medium">Email</label>
-          <input type="email" name="email" value={user.email} disabled className="w-full border p-2 bg-gray-100" />
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={user.email}
+            disabled
+            className="w-full bg-gray-100 border border-gray-300 p-2 rounded-md text-gray-600"
+          />
         </div>
 
+        {/* Bio */}
         <div>
-          <label className="block mb-1 font-medium">Bio</label>
-          <textarea name="bio" value={user.bio || ''} onChange={handleChange} className="w-full border p-2" />
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Bio</label>
+          <textarea
+            name="bio"
+            value={user.bio || ''}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded-md"
+            rows={3}
+          />
         </div>
 
+        {/* Avatar URL */}
         <div>
-          <label className="block mb-1 font-medium">Avatar URL</label>
-          <input type="text" name="avatarUrl" value={user.avatarUrl || ''} onChange={handleChange} className="w-full border p-2" />
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Avatar URL</label>
+          <input
+            type="text"
+            name="avatarUrl"
+            value={user.avatarUrl || ''}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded-md"
+          />
         </div>
 
         {/* Social Links */}
-        <div><label className="block mb-1">GitHub</label><input type="text" name="github" value={user.github || ""} onChange={handleChange} className="w-full border p-2" /></div>
-        <div><label className="block mb-1">LinkedIn</label><input type="text" name="linkedin" value={user.linkedin || ""} onChange={handleChange} className="w-full border p-2" /></div>
-        <div><label className="block mb-1">Instagram</label><input type="text" name="instagram" value={user.instagram || ""} onChange={handleChange} className="w-full border p-2" /></div>
-        <div><label className="block mb-1">Twitter</label><input type="text" name="twitter" value={user.twitter || ""} onChange={handleChange} className="w-full border p-2" /></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {["github", "linkedin", "instagram", "twitter"].map((field) => (
+            <div key={field}>
+              <label className="block mb-1 text-sm font-semibold capitalize text-gray-700">{field}</label>
+              <input
+                type="text"
+                name={field}
+                value={user[field] || ""}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-2 rounded-md"
+              />
+            </div>
+          ))}
+        </div>
 
-        {/* Customizations */}
+        {/* Theme */}
         <div>
-          <label className="block mb-1 font-medium">Theme</label>
-          <select name="theme" value={user.theme || 'light'} onChange={handleChange} className="w-full border p-2">
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Theme</label>
+          <select
+            name="theme"
+            value={user.theme || "light"}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded-md"
+          >
             <option value="light">Light</option>
             <option value="dark">Dark</option>
             <option value="neon">Neon</option>
             <option value="pastel">Pastel</option>
             <option value="ocean">Ocean</option>
-            <option value="pastel">Minimalist</option>
-            <option value="ocean">Retro</option>
-
-          </select>
-
-        </div>
-
-        <div>
-          <label className="block mb-1 font-medium">Button Shape</label>
-          <select name="buttonShape" value={user.buttonShape || "rounded"} onChange={handleChange} className="w-full border p-2">
-            <option value="rounded">Rounded</option>
-            <option value="square">Square</option>
+            <option value="minimalist">Minimalist</option>
+            <option value="retro">Retro</option>
           </select>
         </div>
 
-        <div>
-          <label className="block mb-1 font-medium">Button Size</label>
-          <select name="buttonSize" value={user.buttonSize || "md"} onChange={handleChange} className="w-full border p-2">
-            <option value="sm">Small</option>
-            <option value="md">Medium</option>
-            <option value="lg">Large</option>
-          </select>
+        {/* Button Settings */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block mb-1 text-sm font-semibold text-gray-700">Button Shape</label>
+            <select
+              name="buttonShape"
+              value={user.buttonShape || "rounded"}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              <option value="rounded">Rounded</option>
+              <option value="square">Square</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-semibold text-gray-700">Button Size</label>
+            <select
+              name="buttonSize"
+              value={user.buttonSize || "md"}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-2 rounded-md"
+            >
+              <option value="sm">Small</option>
+              <option value="md">Medium</option>
+              <option value="lg">Large</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-semibold text-gray-700">Button Color</label>
+            <input
+              type="color"
+              name="buttonColor"
+              value={user.buttonColor || "#1d4ed8"}
+              onChange={handleChange}
+              className="w-full h-10 p-1 border border-gray-300 rounded-md cursor-pointer"
+            />
+          </div>
         </div>
 
+        {/* Font Style */}
         <div>
-          <label className="block mb-1 font-medium">Button Color</label>
-          <input type="color" name="buttonColor" value={user.buttonColor || "#1d4ed8"} onChange={handleChange} className="w-24 h-10 p-1 border cursor-pointer" />
-        </div>
-
-        <div>
-          <label className="block mb-1 font-medium">Font Style</label>
-          <select name="fontStyle" value={user.fontStyle || "sans"} onChange={handleChange} className="w-full border p-2">
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Font Style</label>
+          <select
+            name="fontStyle"
+            value={user.fontStyle || "sans"}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded-md"
+          >
             <option value="sans">Sans</option>
             <option value="serif">Serif</option>
             <option value="mono">Monospace</option>
           </select>
         </div>
 
+        {/* Background Gradient */}
         <div>
-          <label className="block mb-1 font-medium">Background Gradient</label>
-          <select name="backgroundGradient" value={user.backgroundGradient || ""} onChange={handleChange} className="w-full border p-2">
+          <label className="block mb-1 text-sm font-semibold text-gray-700">Background Gradient</label>
+          <select
+            name="backgroundGradient"
+            value={user.backgroundGradient || ""}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded-md"
+          >
             <option value="">None</option>
             {gradientPresets.map(preset => (
               <option key={preset.value} value={preset.value}>{preset.label}</option>
@@ -145,11 +223,12 @@ const Settings = () => {
           </select>
         </div>
 
-
-        
-
         {/* Submit */}
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded w-full" disabled={saving}>
+        <button
+          type="submit"
+          className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-md w-full mt-4 transition"
+          disabled={saving}
+        >
           {saving ? "Saving..." : "Update Profile"}
         </button>
       </form>

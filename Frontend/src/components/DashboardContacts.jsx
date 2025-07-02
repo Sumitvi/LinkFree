@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import FlashMessage from '../components/FlashMessage'; // ✅ Adjust if needed
 
 const username = localStorage.getItem("username");
 
 export default function DashboardContacts() {
   const [submissions, setSubmissions] = useState([]);
+  const [flash, setFlash] = useState(null);
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/contact/${username}`)
       .then(res => res.json())
-      .then(setSubmissions);
+      .then(setSubmissions)
+      .catch(() => {
+        setFlash({ type: 'error', message: '❌ Failed to load submissions' });
+      });
   }, []);
 
   const handleDelete = async (id) => {
@@ -21,39 +26,48 @@ export default function DashboardContacts() {
         method: "DELETE",
       });
 
-      setSubmissions((prev) => prev.filter((s) => s.id !== id));
+      setSubmissions(prev => prev.filter(s => s.id !== id));
+      setFlash({ type: 'success', message: '✅ Contact deleted successfully!' });
     } catch (error) {
       console.error("Error deleting contact:", error);
+      setFlash({ type: 'error', message: '❌ Error deleting contact' });
     }
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Contact Submissions</h2>
+    <div className="max-w-5xl mx-auto mt-8 p-4 sm:p-6 bg-white rounded-2xl shadow-lg">
+      <h2 className="text-2xl font-bold text-orange-600 mb-4">📩 Contact Submissions</h2>
+
+      {flash && <FlashMessage type={flash.type} message={flash.message} />}
+
       {submissions.length === 0 ? (
-        <p>No submissions yet.</p>
+        <p className="text-gray-500 text-center mt-6">No submissions yet.</p>
       ) : (
-        <ul className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {submissions.map((s) => (
-            <li key={s.id} className="p-3 bg-white shadow rounded relative">
-              <p><strong>Email:</strong> {s.email}</p>
-              <p><strong>Phone:</strong> {s.phone}</p>
-              <p>
+            <div
+              key={s.id}
+              className="border-l-4 border-orange-400 rounded-xl p-8 bg-gradient-to-b from-white to-orange-50 shadow-md hover:shadow-xl transition-all duration-300 relative"
+            >
+              <button
+                onClick={() => handleDelete(s.id)}
+                className="absolute top-3 right-3 text-red-600 hover:text-red-800"
+                title="Delete contact"
+              >
+                <FaTrash size={18} />
+              </button>
+
+              <p className="text-sm text-gray-800 mb-1"><strong>Email:</strong> {s.email}</p>
+              <p className="text-sm text-gray-800 mb-1"><strong>Phone:</strong> {s.phone}</p>
+              <p className="text-xs text-gray-500 mt-3">
                 <strong>Submitted:</strong>{" "}
                 {s.createdAt
                   ? new Date(s.createdAt.split(".")[0]).toLocaleString()
                   : "N/A"}
               </p>
-                <button
-                onClick={() => handleDelete(s.id)}
-                className="text-red-600 hover:text-red-800 right-5 absolute top-5"
-                title="Delete"
-              >
-                <FaTrash />
-              </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

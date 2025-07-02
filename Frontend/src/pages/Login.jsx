@@ -117,9 +117,9 @@ const Login = ({ setLoggedInUser }) => {
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
-          <div className="text-right text-sm">
+          {/* <div className="text-right text-sm">
             <a href="#" className="text-orange-600 hover:underline">Forgot Password?</a>
-          </div>
+          </div> */}
 
           <button
             type="submit"
