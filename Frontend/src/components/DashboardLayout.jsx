@@ -41,7 +41,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50 relative">
-      {/* Hamburger menu for mobile */}
+     
       <button
         onClick={() => setSidebarOpen(prev => !prev)}
         className="md:hidden absolute top-4 left-4 z-50 bg-white p-2 rounded shadow"
@@ -49,7 +49,7 @@ const DashboardLayout = () => {
         {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Desktop Sidebar */}
+
       <aside className="w-64 bg-white shadow-md p-6 hidden md:flex flex-col justify-between">
         <SidebarContent
           avatarUrl={avatarUrl}
@@ -58,7 +58,6 @@ const DashboardLayout = () => {
         />
       </aside>
 
-      {/* Mobile Sidebar Drawer */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black bg-opacity-40 md:hidden"
@@ -78,7 +77,7 @@ const DashboardLayout = () => {
         </div>
       )}
 
-      {/* Main Content */}
+
       <main className="flex-1 p-4 sm:p-6 bg-white">
         <DashboardHeader />
 
@@ -94,7 +93,6 @@ const DashboardLayout = () => {
   );
 };
 
-// Sidebar Content (reused by desktop & mobile)
 const SidebarContent = ({ avatarUrl, username, handleProfileClick, closeSidebar }) => (
   <>
     <div>
@@ -144,7 +142,7 @@ const SidebarContent = ({ avatarUrl, username, handleProfileClick, closeSidebar 
   </>
 );
 
-// Reusable NavItem component
+
 const NavItem = ({ to, icon, children, onClick }) => (
   <NavLink
     to={to}

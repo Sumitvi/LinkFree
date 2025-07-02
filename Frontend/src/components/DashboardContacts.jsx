@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
-import FlashMessage from '../components/FlashMessage'; // ✅ Adjust if needed
+import FlashMessage from '../components/FlashMessage'; 
 
 const username = localStorage.getItem("username");
 

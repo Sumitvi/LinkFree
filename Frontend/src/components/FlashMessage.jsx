@@ -1,4 +1,3 @@
-// components/FlashMessage.jsx
 import React, { useEffect, useState } from 'react';
 
 const FlashMessage = ({ message, type = "success", onClose, duration = 5000 }) => {

@@ -25,7 +25,6 @@ public class ContactSubmission {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }

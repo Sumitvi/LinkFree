@@ -35,7 +35,7 @@ const PublicPage = () => {
     fetchLinks();
   }, [username]);
 
-  // Button Styles
+  
   const {
     theme: themeKey = "light",
     buttonShape = "rounded",
@@ -79,7 +79,7 @@ const PublicPage = () => {
     transition duration-300 hover:scale-[1.02] ${shapeClass} ${sizeClass} ${fontClass} ${backgroundClass} ${textClass}
   `;
 
-  // 🌀 Loading Spinner
+  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">

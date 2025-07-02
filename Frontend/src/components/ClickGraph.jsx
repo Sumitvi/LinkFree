@@ -17,7 +17,7 @@ const ClickGraph = ({ username }) => {
     const fetchClicks = async () => {
       try {
         const res = await axios.get(`http://localhost:8080/api/links/clicks-summary/${username}`);
-        setData(res.data); // Expected: [{ title: 'GitHub', clickCount: 7 }, ...]
+        setData(res.data); 
       } catch (err) {
         console.error("Failed to load click data", err);
       }

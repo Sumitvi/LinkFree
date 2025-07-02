@@ -1,6 +1,6 @@
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
-    // Redirect to your backend's OAuth2 start endpoint
+    
     // window.location.href = "http://localhost:8080/api/auth/google";
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
 

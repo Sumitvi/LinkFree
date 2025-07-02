@@ -6,7 +6,7 @@ import { Save, Shield, Eye, EyeOff } from 'lucide-react';
 const ProtectedLinks = () => {
   const [links, setLinks] = useState([]);
   const [flash, setFlash] = useState(null);
-  const [visible, setVisible] = useState({}); // Track visibility by link ID
+  const [visible, setVisible] = useState({}); 
 
   const username = localStorage.getItem("username");
 

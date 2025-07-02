@@ -37,7 +37,7 @@ public class LinkController {
             return ResponseEntity.badRequest().body("Username already exists");
         }
 
-        user.setId(null); // Let JPA auto-generate
+        user.setId(null); 
         userRepo.save(user);
         return ResponseEntity.ok("User registered successfully");
     }
@@ -82,7 +82,7 @@ public class LinkController {
         Link link = optionalLink.get();
         link.setTitle(updatedLink.getTitle());
         link.setUrl(updatedLink.getUrl());
-//        link.setIcon(updatedLink.getIcon()); // optional, if using
+//        link.setIcon(updatedLink.getIcon()); 
 
         linkRepo.save(link);
         return ResponseEntity.ok(link);
@@ -146,7 +146,7 @@ public class LinkController {
     public record DayClick(String date, Long count) {}
 
 
-    // In LinkController.java
+
     @GetMapping("/clicks-summary/{username}")
     public ResponseEntity<List<Map<String, Object>>> getClicksSummary(@PathVariable String username) {
         List<Link> links = linkRepo.findAllByUser_UsernameOrderByPositionOrder(username);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
-import FlashMessage from '../components/FlashMessage'; // adjust path if needed
+import FlashMessage from '../components/FlashMessage'; 
 
 const Login = ({ setLoggedInUser }) => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -67,7 +67,7 @@ const Login = ({ setLoggedInUser }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
-      {/* Flash Message */}
+     
       <FlashMessage
         message={flash.message}
         type={flash.type}
@@ -75,7 +75,7 @@ const Login = ({ setLoggedInUser }) => {
       />
 
       <div className="w-full max-w-sm sm:max-w-md space-y-6 text-center">
-        {/* Logo */}
+       
         <div className="flex justify-center">
           <img
             src="https://bcassetcdn.com/public/blog/wp-content/uploads/2023/02/28141228/orange-abstract-letter-a-by-bryad-brandcrowd.png"
@@ -84,7 +84,7 @@ const Login = ({ setLoggedInUser }) => {
           />
         </div>
 
-        {/* Title */}
+       
         <div>
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-orange-600">
             LinkFree Your Link Own Manager
@@ -93,7 +93,7 @@ const Login = ({ setLoggedInUser }) => {
               Manage all your links, customize your style, and track every click          </p>
         </div>
 
-        {/* Form */}
+       
         <form onSubmit={handleSubmit} className="space-y-4 text-left px-2 sm:px-0">
           <div>
             <label className="text-sm font-medium text-gray-700">Email</label>
@@ -129,20 +129,19 @@ const Login = ({ setLoggedInUser }) => {
           </button>
         </form>
 
-        {/* Sign up */}
+      
         <p className="text-sm text-gray-600">
           Don’t have an account?{' '}
           <a href="/register" className="text-orange-600 font-semibold hover:underline">Sign up</a>
         </p>
 
-        {/* Divider */}
         <div className="flex items-center gap-2 text-gray-400 text-sm">
           <hr className="flex-grow border-gray-300" />
           OR
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        {/* Google Login */}
+       
         <div className="flex justify-center">
           <GoogleLogin
             onSuccess={handleGoogleLogin}

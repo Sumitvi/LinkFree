@@ -50,7 +50,7 @@ public class User {
     @Column(name = "button_shape")
     private String buttonShape;
 
-         // "rounded", "square"
+        
     @Column private String buttonSize;
     @Column private String buttonColor;
     @Column private String fontStyle;

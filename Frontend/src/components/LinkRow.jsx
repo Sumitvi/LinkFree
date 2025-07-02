@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getLinkAnalytics } from '../services/api';
 import { Trash2, Pencil, Check, X } from 'lucide-react';
-import FlashMessage from './FlashMessage'; // ✅ Add import
+import FlashMessage from './FlashMessage'; 
 
 const LinkRow = ({ link, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,7 +35,8 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
   };
 
   const handleDelete = async () => {
-    // Replace confirm with manual confirmation
+
+
     const confirmed = window.confirm("Are you sure you want to delete this link?");
     if (!confirmed) return;
 
@@ -57,7 +58,7 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
         const count = await getLinkAnalytics(link.id);
         setRecentClicks(count);
       } catch {
-        // No flash here since this is non-critical
+        
       }
     };
     fetchAnalytics();
@@ -65,7 +66,7 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
 
   return (
     <div className="bg-white border border-orange-200 rounded-xl p-4 shadow-sm flex flex-col justify-between min-h-[180px]">
-      {/* ✅ Flash Message */}
+   
       <FlashMessage
         message={flash.message}
         type={flash.type}

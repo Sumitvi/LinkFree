@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Link as LinkIcon } from "lucide-react";
 import axios from 'axios';
-import FlashMessage from '../components/FlashMessage'; // ✅ Adjust path if needed
+import FlashMessage from '../components/FlashMessage'; 
 
 const Shortener = () => {
   const [originalUrl, setOriginalUrl] = useState('');
@@ -99,7 +99,7 @@ const Shortener = () => {
         )}
       </div>
 
-      {/* History Section */}
+
       <div>
         <h3 className="text-lg font-semibold text-gray-700 mb-3">📜 Your Short Links</h3>
 

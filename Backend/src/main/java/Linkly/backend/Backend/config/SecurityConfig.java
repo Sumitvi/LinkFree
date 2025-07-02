@@ -24,7 +24,7 @@ public class SecurityConfig {
     private JwtAuthFilter jwtAuthFilter;
 
     @Autowired
-    private OAuth2SuccessHandler oAuth2SuccessHandler; // ✅ Inject success handler
+    private OAuth2SuccessHandler oAuth2SuccessHandler; 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
-                        .successHandler(oAuth2SuccessHandler) // ✅ handle token + redirect
+                        .successHandler(oAuth2SuccessHandler) 
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable();

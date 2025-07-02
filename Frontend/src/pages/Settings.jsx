@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import FlashMessage from '../components/FlashMessage'; // ✅ assuming this exists in your project
+import FlashMessage from '../components/FlashMessage'; 
 
 const Settings = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [flash, setFlash] = useState(null); // ✅ for flash messages
+  const [flash, setFlash] = useState(null); 
 
   const username = localStorage.getItem("username");
 
@@ -68,7 +68,7 @@ const Settings = () => {
 
       <form onSubmit={handleSubmit} className="space-y-5">
 
-        {/* Username */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Username</label>
           <input
@@ -80,7 +80,7 @@ const Settings = () => {
           />
         </div>
 
-        {/* Email */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Email</label>
           <input
@@ -92,7 +92,7 @@ const Settings = () => {
           />
         </div>
 
-        {/* Bio */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Bio</label>
           <textarea
@@ -104,7 +104,7 @@ const Settings = () => {
           />
         </div>
 
-        {/* Avatar URL */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Avatar URL</label>
           <input
@@ -116,7 +116,7 @@ const Settings = () => {
           />
         </div>
 
-        {/* Social Links */}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {["github", "linkedin", "instagram", "twitter"].map((field) => (
             <div key={field}>
@@ -132,7 +132,7 @@ const Settings = () => {
           ))}
         </div>
 
-        {/* Theme */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Theme</label>
           <select
@@ -151,7 +151,7 @@ const Settings = () => {
           </select>
         </div>
 
-        {/* Button Settings */}
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block mb-1 text-sm font-semibold text-gray-700">Button Shape</label>
@@ -192,7 +192,7 @@ const Settings = () => {
           </div>
         </div>
 
-        {/* Font Style */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Font Style</label>
           <select
@@ -207,7 +207,7 @@ const Settings = () => {
           </select>
         </div>
 
-        {/* Background Gradient */}
+
         <div>
           <label className="block mb-1 text-sm font-semibold text-gray-700">Background Gradient</label>
           <select
@@ -223,7 +223,7 @@ const Settings = () => {
           </select>
         </div>
 
-        {/* Submit */}
+
         <button
           type="submit"
           className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-md w-full mt-4 transition"

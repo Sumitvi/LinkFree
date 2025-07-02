@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FlashMessage from '../components/FlashMessage'; // adjust path if needed
+import FlashMessage from '../components/FlashMessage'; 
 
 const Register = () => {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
@@ -47,7 +47,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
-      {/* Flash Message */}
+
       <FlashMessage
         message={flash.message}
         type={flash.type}
@@ -55,7 +55,7 @@ const Register = () => {
       />
 
       <div className="w-full max-w-sm sm:max-w-md space-y-6 text-center">
-        {/* Logo */}
+
         <div className="flex justify-center">
           <img
             src="https://bcassetcdn.com/public/blog/wp-content/uploads/2023/02/28141228/orange-abstract-letter-a-by-bryad-brandcrowd.png"
@@ -64,7 +64,7 @@ const Register = () => {
           />
         </div>
 
-        {/* Title */}
+
         <div>
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-orange-600">
             Create Your LinkFree Account
@@ -74,7 +74,7 @@ const Register = () => {
           </p>
         </div>
 
-        {/* Register Form */}
+
         <form onSubmit={handleRegister} className="space-y-4 text-left px-2 sm:px-0">
           <div>
             <label className="text-sm font-medium text-gray-700">Username</label>

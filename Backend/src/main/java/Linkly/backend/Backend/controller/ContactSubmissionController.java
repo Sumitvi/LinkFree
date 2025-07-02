@@ -25,7 +25,7 @@ public class ContactSubmissionController {
 
     @PostMapping
     public ResponseEntity<?> submit(@RequestBody ContactDTO dto) {
-        // findByUsername returns Optional<User>, so unwrap it safely
+        // findByUsername returns Optional<User>, 
         User user = userRepo.findByUsername(dto.username)
                 .orElse(null);
 

@@ -4,13 +4,13 @@ import { getUserLinks } from '../services/api';
 import LinkRow from '../components/LinkRow';
 import AddLink from '../components/AddLink';
 import AnalyticsChart from '../components/AnalyticsChart';
-import FlashMessage from '../components/FlashMessage'; // ✅ Import FlashMessage
+import FlashMessage from '../components/FlashMessage'; 
 import { Link2, BarChart } from 'lucide-react';
 
 const MyLinks = () => {
   const [links, setLinks] = useState([]);
   const [analyticsData, setAnalyticsData] = useState([]);
-  const [flash, setFlash] = useState({ message: '', type: '' }); // ✅ State for flash
+  const [flash, setFlash] = useState({ message: '', type: '' }); 
 
   const username = localStorage.getItem("username");
 
@@ -47,7 +47,7 @@ const MyLinks = () => {
 
   return (
     <div className="p-4 sm:p-6 bg-white rounded-2xl shadow-sm gap-20">
-      {/* ✅ Flash Message */}
+
       <FlashMessage
         message={flash.message}
         type={flash.type}
@@ -85,7 +85,7 @@ const MyLinks = () => {
                 fetchLinks();
                 setFlash({ message: 'Link updated successfully', type: 'success' });
               }}
-              setFlash={setFlash} // ✅ pass flash to child (optional use)
+              setFlash={setFlash}
               useCard
             />
           ))}

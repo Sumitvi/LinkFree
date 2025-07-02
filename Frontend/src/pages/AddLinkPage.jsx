@@ -5,8 +5,7 @@ const AddLinkPage = () => {
   const username = localStorage.getItem("username");
 
   const handleRefresh = () => {
-    // You can redirect to dashboard or reload links after adding
-    // For example, use navigate('/dashboard') or show a toast
+    
     console.log("Link added successfully!");
   };
 

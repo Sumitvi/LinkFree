@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
+     
       <div className="w-60 bg-gray-800 text-white p-4">
         <h1 className="text-2xl font-bold mb-6">📌 Dashboard</h1>
         <nav className="flex flex-col gap-3">
@@ -29,9 +29,9 @@ const Dashboard = () => {
         </nav>
       </div>
 
-      {/* Main Content */}
+
       <div className="flex-1 bg-gray-100">
-        {/* Header with Avatar */}
+      
         <div className="flex justify-between items-center px-6 py-4 bg-white shadow">
           <h2 className="text-xl font-semibold">Welcome, @{username}</h2>
           <img
@@ -42,7 +42,7 @@ const Dashboard = () => {
         </div>
 
         <div className="p-6">
-          {/* 👇 Show Graph only on /dashboard home page */}
+
           {location.pathname === "/dashboard" && (
             <ClickGraph username={username} />
           )}

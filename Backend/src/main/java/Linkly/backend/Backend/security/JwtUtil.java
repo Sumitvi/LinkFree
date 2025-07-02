@@ -14,13 +14,13 @@ public class JwtUtil {
 
     private static final String SECRET_KEY = "replace_this_with_a_very_long_secret_key_which_is_at_least_256_bits";
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 hours
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; 
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    // Generate token
+
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -30,23 +30,20 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Extract username (subject)
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // Extract expiration
+
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // Generic claim extractor
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    // Core claim extractor
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
@@ -56,7 +53,6 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // Expired check
     public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
