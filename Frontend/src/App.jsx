@@ -11,7 +11,7 @@ import DashboardContacts from './components/DashboardContacts';
 import ProtectedLinks from './pages/ProtectedLinks'; 
 import Shortener from './pages/Shortener';
 import AuthGuard from './components/AuthGuard';
-import OAuth2Success from './components/OAuth2Success ';
+import OAuth2Success from './pages/OAuth2Success';
 
 function App() {
   return (

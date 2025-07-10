@@ -17,3 +17,114 @@
     }
   }
 }
+
+
+.WhiteCanvas {
+  background-color: #ffffff;
+}
+.ShadowyGray {
+  background: radial-gradient(#ccc, #eee);
+}
+.LinearSky {
+  background: linear-gradient(to right, #667eea, #764ba2);
+}
+.SubtleGrayDots {
+  background: repeating-linear-gradient(
+    45deg,
+    #f9f9f9,
+    #f9f9f9 10px,
+    #f1f1f1 10px,
+    #f1f1f1 20px
+  );
+}
+.BlurredFuchsia {
+  background: radial-gradient(circle, #ff77e9, #bf36bf);
+}
+.MaskedGray {
+  background: linear-gradient(135deg, #d3d3d3 25%, transparent 25%) -10px 0,
+              linear-gradient(225deg, #d3d3d3 25%, transparent 25%) -10px 0,
+              linear-gradient(315deg, #d3d3d3 25%, transparent 25%),
+              linear-gradient(45deg, #d3d3d3 25%, transparent 25%);
+  background-size: 20px 20px;
+  background-color: #eee;
+}
+.GradientGrid {
+  background: linear-gradient(to bottom right, #f9d423, #ff4e50);
+}
+.LightGrayLines {
+  background: repeating-linear-gradient(
+    to bottom,
+    #f8f8f8,
+    #f8f8f8 2px,
+    #eaeaea 2px,
+    #eaeaea 4px
+  );
+}
+.RadiantBlue {
+  background: linear-gradient(to right, #3a7bd5, #00d2ff);
+}
+.GradientOrb {
+  background: radial-gradient(circle, #4f46e5, #9333ea);
+}
+.RadialHalo {
+  background: radial-gradient(circle at center, #ffe259, #ffa751);
+}
+.VividCircles {
+  background: repeating-radial-gradient(circle, #ff9a9e, #fad0c4 10%, #fbc2eb 20%);
+}
+
+
+
+.WhiteCanvas { background-color: white; }
+.ShadowyGray { background: radial-gradient(#ccc, #eee); }
+.LinearSky { background: linear-gradient(to right, #667eea, #764ba2); }
+.SubtleGrayDots {
+  background: repeating-linear-gradient(45deg, #f9f9f9, #f9f9f9 10px, #f1f1f1 10px, #f1f1f1 20px);
+}
+.BlurredFuchsia { background: radial-gradient(circle, #ff77e9, #bf36bf); }
+.MaskedGray {
+  background: linear-gradient(135deg, #d3d3d3 25%, transparent 25%) -10px 0,
+              linear-gradient(225deg, #d3d3d3 25%, transparent 25%) -10px 0,
+              linear-gradient(315deg, #d3d3d3 25%, transparent 25%),
+              linear-gradient(45deg, #d3d3d3 25%, transparent 25%);
+  background-size: 20px 20px;
+  background-color: #eee;
+}
+.GradientGrid { background: linear-gradient(to bottom right, #f9d423, #ff4e50); }
+.LightGrayLines {
+  background: repeating-linear-gradient(to bottom, #f8f8f8, #f8f8f8 2px, #eaeaea 2px, #eaeaea 4px);
+}
+.RadiantBlue { background: linear-gradient(to right, #3a7bd5, #00d2ff); }
+.GradientOrb { background: radial-gradient(circle, #4f46e5, #9333ea); }
+.RadialHalo { background: radial-gradient(circle at center, #ffe259, #ffa751); }
+.VividCircles {
+  background: repeating-radial-gradient(circle, #ff9a9e, #fad0c4 10%, #fbc2eb 20%);
+}
+
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+.zoom-in {
+  animation: zoomIn 0.4s ease-out forwards;
+}

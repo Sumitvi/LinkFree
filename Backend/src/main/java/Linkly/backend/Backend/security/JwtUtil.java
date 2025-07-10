@@ -2,6 +2,7 @@ package Linkly.backend.Backend.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +13,20 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "replace_this_with_a_very_long_secret_key_which_is_at_least_256_bits";
+    @Value("${jwt.secret}")
+    private String secret;
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; 
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 hours
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        if (secret == null || secret.isEmpty()) {
+            throw new IllegalArgumentException("JWT secret key must not be null or empty");
+        }
+        if (secret.length() < 32) {
+            throw new IllegalArgumentException("JWT secret key must be at least 32 characters");
+        }
+        return Keys.hmacShaKeyFor(secret.getBytes());
     }
-
 
     public String generateToken(String username) {
         return Jwts.builder()
@@ -33,7 +40,6 @@ public class JwtUtil {
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
-
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
@@ -57,14 +63,12 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username != null &&
                 username.equals(userDetails.getUsername()) &&
                 !isTokenExpired(token));
     }
-
 
     public boolean validateToken(String token) {
         try {
@@ -74,6 +78,7 @@ public class JwtUtil {
                     .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("JWT Error: " + e.getMessage());
             return false;
         }
     }

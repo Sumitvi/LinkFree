@@ -35,7 +35,6 @@ const PublicPage = () => {
     fetchLinks();
   }, [username]);
 
-  
   const {
     theme: themeKey = "light",
     buttonShape = "rounded",
@@ -49,29 +48,17 @@ const PublicPage = () => {
   } = user || {};
 
   const theme = themes[themeKey] || themes["light"];
-
   const shapeClass = buttonShape === "square" ? "rounded-none" : "rounded-xl";
   const sizeClass =
-    buttonSize === "sm"
-      ? "text-sm py-2 px-3"
-      : buttonSize === "lg"
-        ? "text-lg py-4 px-6"
-        : "text-base py-3 px-4";
-
-  const fontClass =
-    fontStyle === "serif"
-      ? "font-serif"
-      : fontStyle === "mono"
-        ? "font-mono"
-        : "font-sans";
+    buttonSize === "sm" ? "text-sm py-2 px-3" :
+    buttonSize === "lg" ? "text-lg py-4 px-6" :
+    "text-base py-3 px-4";
+  const fontClass = fontStyle === "serif" ? "font-serif" : fontStyle === "mono" ? "font-mono" : "font-sans";
 
   const isTailwindBg = buttonColor?.startsWith("bg-");
   const backgroundClass = backgroundGradient
     ? `bg-gradient-to-r ${backgroundGradient}`
-    : isTailwindBg
-      ? buttonColor
-      : "";
-
+    : isTailwindBg ? buttonColor : "";
   const textClass = !backgroundGradient && !isTailwindBg ? `text-[${buttonColor}]` : "text-white";
 
   const contactButtonClasses = `
@@ -79,7 +66,6 @@ const PublicPage = () => {
     transition duration-300 hover:scale-[1.02] ${shapeClass} ${sizeClass} ${fontClass} ${backgroundClass} ${textClass}
   `;
 
-  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -98,12 +84,7 @@ const PublicPage = () => {
 
   return (
     <div
-      className={`
-        min-h-screen flex flex-col items-center justify-start p-4
-        font-${fontStyle}
-        ${backgroundGradient ? `bg-gradient-to-b ${backgroundGradient}` : theme.background}
-        ${theme.text}
-      `}
+      className={`min-h-screen flex flex-col items-center justify-start p-4 font-${fontStyle} animate-fade-in ${backgroundGradient ? `bg-gradient-to-b ${backgroundGradient}` : theme.background} ${theme.text}`}
       style={{
         backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : undefined,
         backgroundSize: 'cover',
@@ -112,22 +93,22 @@ const PublicPage = () => {
     >
       {customCss && <style dangerouslySetInnerHTML={{ __html: customCss }} />}
 
-      <div className="max-w-md w-full mt-6 text-center bg-white bg-opacity-90 p-6 rounded-2xl shadow-lg backdrop-blur-md border border-gray-200">
+      <div className="max-w-md w-full mt-6 text-center bg-white bg-opacity-90 p-6 rounded-2xl shadow-lg backdrop-blur-md border border-gray-200 animate-zoom-in">
         {flash && <FlashMessage type={flash.type} message={flash.message} onClose={() => setFlash(null)} />}
 
         {logoUrl && (
-          <img src={logoUrl} alt="Logo" className="w-20 h-20 object-contain mx-auto mb-3" />
+          <img src={logoUrl} alt="Logo" className="w-20 h-20 object-contain mx-auto mb-3 animate-fade-in" />
         )}
 
         <img
           src={user.avatarUrl || `https://ui-avatars.com/api/?name=${username}`}
           alt="avatar"
-          className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white shadow"
+          className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white shadow animate-slide-up"
         />
-        <h2 className="text-2xl font-bold text-gray-800">@{user.username}</h2>
-        {user.bio && <p className="mt-2 text-gray-600 text-sm">{user.bio}</p>}
+        <h2 className="text-2xl font-bold text-gray-800 animate-slide-up">@{user.username}</h2>
+        {user.bio && <p className="mt-2 text-gray-600 text-sm animate-fade-in">{user.bio}</p>}
 
-        <div className="flex justify-center space-x-4 text-xl mt-4">
+        <div className="flex justify-center space-x-4 text-xl mt-4 animate-fade-in">
           {user.github && <a href={user.github} target="_blank" rel="noopener noreferrer" className="hover:text-black"><FaGithub /></a>}
           {user.linkedin && <a href={user.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600"><FaLinkedin /></a>}
           {user.instagram && <a href={user.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-pink-500"><FaInstagram /></a>}
@@ -158,7 +139,7 @@ const PublicPage = () => {
           </button>
 
           {showContact && (
-            <div className="mt-4 bg-white p-4 rounded-xl shadow animate-fade-in border border-gray-200">
+            <div className="mt-4 bg-white p-4 rounded-xl shadow animate-slide-up border border-gray-200">
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
@@ -183,23 +164,9 @@ const PublicPage = () => {
                 }}
                 className="space-y-3"
               >
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="Your Email"
-                  className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-400"
-                />
-                <input
-                  name="phone"
-                  type="tel"
-                  required
-                  placeholder="Your Phone"
-                  className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-400"
-                />
-                <button type="submit" className={contactButtonClasses}>
-                  Submit
-                </button>
+                <input name="email" type="email" required placeholder="Your Email" className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-400" />
+                <input name="phone" type="tel" required placeholder="Your Phone" className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-400" />
+                <button type="submit" className={contactButtonClasses}>Submit</button>
               </form>
             </div>
           )}

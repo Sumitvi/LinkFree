@@ -1,7 +1,6 @@
 package Linkly.backend.Backend.config;
 
 import Linkly.backend.Backend.security.JwtAuthFilter;
-import Linkly.backend.Backend.security.OAuth2SuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +16,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
 @Configuration
 public class SecurityConfig {
 
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
-
-    @Autowired
-    private OAuth2SuccessHandler oAuth2SuccessHandler; 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -36,24 +37,24 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/contact/**",
-                                "/api/links/verify-password/**",
-                                "/oauth2/**",
-                                "/api/oauth2/**"
+                                "/api/links/verify-password/**"
                         ).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
                 )
-                .oauth2Login(oauth -> oauth
-                        .successHandler(oAuth2SuccessHandler) 
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((HttpServletRequest request, HttpServletResponse response, org.springframework.security.core.AuthenticationException authException) -> {
+                            if (request.getRequestURI().startsWith("/api")) {
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                            } else {
+                                response.sendRedirect("/"); // Optional: redirect to homepage or login page
+                            }
+                        })
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin().disable();
 
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -65,9 +66,15 @@ public class SecurityConfig {
                         .allowedOrigins("http://localhost:5173")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
+                        .exposedHeaders("Authorization")
                         .allowCredentials(true);
             }
         };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
