@@ -19,5 +19,5 @@ COPY --from=build /app/target/*.jar app.jar
 ENV PORT=10000
 EXPOSE 10000
 
-# Start the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Start the Spring Boot app on Render's port
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=${PORT}"]
