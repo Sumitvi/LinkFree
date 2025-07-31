@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://linkfree-huz0.onrender.com';
 axios.defaults.withCredentials = true;
 
 // ✅ Set default headers when token is available
