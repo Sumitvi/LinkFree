@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://linkfree-huz0.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
 // ✅ Set default headers when token is available
