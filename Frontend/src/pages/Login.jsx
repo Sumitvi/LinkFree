@@ -22,7 +22,7 @@ const Login = ({ setLoggedInUser }) => {
     e.preventDefault();
     try {
     
-        const res = await axios.post(`${API_BASE_URL}/auth/login`, form);      const { token, username, avatarUrl } = res.data;
+        const res = await axios.post(`${API_BASE_URL}/api/auth/login`, form);      const { token, username, avatarUrl } = res.data;
 
       if (!token || !username) {
         showFlash("Login response incomplete", "error");
