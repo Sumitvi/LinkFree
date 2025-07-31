@@ -28,7 +28,7 @@ const AddLink = ({ onLinkAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/links/${username}/add`, form);      setForm({ title: '', url: '', icon: '', enabled: true });
+      await axios.post(`${API_BASE_URL}/api/links/${username}/add`, form);      setForm({ title: '', url: '', icon: '', enabled: true });
       showFlash("✅ Link added successfully!", "success");
       onLinkAdded();
     } catch (err) {

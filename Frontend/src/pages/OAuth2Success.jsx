@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {refreshAuthHeader} from '../services/api'; // Import the function to refresh auth header
+import {refreshAuthHeader} from '../services/api'; 
 
 const OAuth2Success = () => {
   useEffect(() => {
@@ -11,9 +11,9 @@ const OAuth2Success = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
 
-      refreshAuthHeader(); // ✅ Ensure axios has token for all future requests
+      refreshAuthHeader(); 
 
-      // Redirect to dashboard after saving details
+    
       window.location.href = '/dashboard';
     } else {
       console.error('Token or username missing from query params');

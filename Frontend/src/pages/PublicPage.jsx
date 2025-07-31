@@ -151,7 +151,7 @@ const PublicPage = () => {
                     phone: formData.get("phone"),
                   };
                   try {
-                    await fetch(`${API_BASE_URL}/contact`, {
+                    await fetch(`${API_BASE_URL}/api/contact`, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(submission),

@@ -37,7 +37,7 @@ const BackgroundCustomizer = () => {
     setSelectedTheme(theme);
 
     if (userId) {
-      axios.put(`${API_BASE_URL}/users/${userId}`, {
+      axios.put(`${API_BASE_URL}/api/users/${userId}`, {
         theme: theme
       }, {
         headers: { Authorization: `Bearer ${token}` }

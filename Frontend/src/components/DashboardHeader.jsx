@@ -12,7 +12,7 @@ const DashboardHeader = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-      const res = await axios.get(`${API_BASE_URL}/users/${username}`);        setUser(res.data);
+      const res = await axios.get(`${API_BASE_URL}/api/users/${username}`);        setUser(res.data);
       } catch (err) {
         console.error("Failed to load user", err);
       }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const API_BASE_URL = "https://linkfree-huz0.onrender.com";axios.defaults.withCredentials = true;
+export const API_BASE_URL = "https://linkfree-huz0.onrender.com";
+axios.defaults.withCredentials = true;
 
 // ✅ Set default headers when token is available
 const setAuthHeader = () => {
@@ -20,9 +21,10 @@ export const refreshAuthHeader = () => {
 
 // ===================== API CALLS =======================
 
+// ✅ Get user links
 export const getUserLinks = async (username) => {
   try {
-    const res = await axios.get(`${API_BASE_URL}/links/${username}`);
+    const res = await axios.get(`${API_BASE_URL}/api/links/${username}`);
     return res.data;
   } catch (err) {
     console.error("Error fetching user links:", err);
@@ -30,9 +32,10 @@ export const getUserLinks = async (username) => {
   }
 };
 
+// ✅ Get analytics for a specific link
 export const getLinkAnalytics = async (linkId) => {
   try {
-    const res = await axios.get(`${API_BASE_URL}/links/${linkId}/analytics`);
+    const res = await axios.get(`${API_BASE_URL}/api/links/${linkId}/analytics`);
     return res.data;
   } catch (err) {
     console.error("Error fetching link analytics:", err);
@@ -40,12 +43,24 @@ export const getLinkAnalytics = async (linkId) => {
   }
 };
 
+// ✅ Get user profile info
 export const getUserInfo = async (username) => {
   try {
-    const res = await axios.get(`${API_BASE_URL}/users/${username}`);
+    const res = await axios.get(`${API_BASE_URL}/api/users/${username}`);
     return res.data;
   } catch (err) {
     console.error("Error fetching user info:", err);
+    throw err;
+  }
+};
+
+// ✅ (Optional) Get click summary for dashboard
+export const getClickSummary = async (username) => {
+  try {
+    const res = await axios.get(`${API_BASE_URL}/api/links/clicks-summary/${username}`);
+    return res.data;
+  } catch (err) {
+    console.error("Error fetching click summary:", err);
     throw err;
   }
 };

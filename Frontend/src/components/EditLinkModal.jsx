@@ -15,7 +15,7 @@ const EditLinkModal = ({ link, onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${API_BASE_URL}/links/update/${form.id}`, form);
+      await axios.put(`${API_BASE_URL}/api/links/update/${form.id}`, form);
       setFlash({ message: '✅ Link updated successfully!', type: 'success' });
       setTimeout(() => {
         onSave();

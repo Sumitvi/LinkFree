@@ -20,7 +20,7 @@ const Settings = () => {
       }
 
       try {
-        const res = await axios.get(`${API_BASE_URL}/users/${username}`);
+        const res = await axios.get(`${API_BASE_URL}/api/users/${username}`);
         setUser(res.data);
       } catch (err) {
         console.error("Error fetching user info:", err);
@@ -42,7 +42,7 @@ const Settings = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      await axios.put(`${API_BASE_URL}/users/${user.id}`, user);
+      await axios.put(`${API_BASE_URL}/api/users/${user.id}`, user);
       setFlash({ type: 'success', message: '✅ Profile updated successfully!' });
     } catch (err) {
       console.error("❌ Update failed:", err);

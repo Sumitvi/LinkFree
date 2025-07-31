@@ -18,7 +18,7 @@ const ClickGraph = ({ username }) => {
   useEffect(() => {
     const fetchClicks = async () => {
       try {
-      const res = await axios.get(`${API_BASE_URL}/links/clicks-summary/${username}`);        setData(res.data); 
+      const res = await axios.get(`${API_BASE_URL}/api/links/clicks-summary/${username}`);        setData(res.data); 
       } catch (err) {
         console.error("Failed to load click data", err);
       }

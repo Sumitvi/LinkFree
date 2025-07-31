@@ -22,7 +22,8 @@ const MyLinks = () => {
 
       if (data.length > 0) {
         const firstLinkId = data[0].id;
-      const res = await axios.get(`${API_BASE_URL}/links/analytics/${firstLinkId}/last28days`);        const chartData = res.data.map((entry) => ({
+      const res = await axios.get(`${API_BASE_URL}/api/links/analytics/${firstLinkId}/last28days`);    
+          const chartData = res.data.map((entry) => ({
           day: entry.date || entry.day,
           clicks: entry.count || entry.clicks,
         }));

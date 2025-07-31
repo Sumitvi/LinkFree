@@ -24,7 +24,7 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
   const handleSave = async () => {
     setLoading(true);
     try {
-      await axios.put(`${API_BASE_URL}/links/${link.id}`, form);
+      await axios.put(`${API_BASE_URL}/api/links/${link.id}`, form);
       setIsEditing(false);
       onUpdate();
       setFlash({ message: 'Link updated successfully', type: 'success' });
@@ -43,7 +43,8 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
 
     setLoading(true);
     try {
-      await axios.delete(`${API_BASE_URL}/links/${link.id}`);      onDelete(link.id);
+      await axios.delete(`${API_BASE_URL}/api/links/${link.id}`);  
+       onDelete(link.id);
       setFlash({ message: 'Link deleted successfully', type: 'success' });
     } catch (err) {
       setFlash({ message: 'Failed to delete link', type: 'error' });

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FlashMessage from '../components/FlashMessage'; 
+import FlashMessage from '../components/FlashMessage';
 import { API_BASE_URL } from '../services/api';
-
 
 const Register = () => {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
@@ -39,16 +38,30 @@ const Register = () => {
     if (!validateForm()) return;
 
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/auth/register`, form);      showFlash("✅ Registered successfully!", "success");
+      
+      const res = await axios.post(`${API_BASE_URL}/api/auth/register`, {
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      });
+
+      showFlash("✅ Registered successfully!", "success");
+
+      
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1500);
+
     } catch (err) {
-      console.error(err);
-      showFlash(err.response?.data || "Registration failed", "error");
+      console.error("Registration error:", err);
+      
+      const errorMessage = err.response?.data?.message || "Registration failed";
+      showFlash(errorMessage, "error");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
-
       <FlashMessage
         message={flash.message}
         type={flash.type}
@@ -56,7 +69,6 @@ const Register = () => {
       />
 
       <div className="w-full max-w-sm sm:max-w-md space-y-6 text-center">
-
         <div className="flex justify-center">
           <img
             src="https://bcassetcdn.com/public/blog/wp-content/uploads/2023/02/28141228/orange-abstract-letter-a-by-bryad-brandcrowd.png"
@@ -64,7 +76,6 @@ const Register = () => {
             className="h-10 sm:h-12"
           />
         </div>
-
 
         <div>
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-orange-600">
@@ -74,7 +85,6 @@ const Register = () => {
             Manage all your links from one profile
           </p>
         </div>
-
 
         <form onSubmit={handleRegister} className="space-y-4 text-left px-2 sm:px-0">
           <div>

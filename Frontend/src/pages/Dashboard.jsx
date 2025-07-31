@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ClickGraph from '../components/ClickGraph'; // 👈 Create this component
+import ClickGraph from '../components/ClickGraph'; 
 
 const Dashboard = () => {
   const navigate = useNavigate();

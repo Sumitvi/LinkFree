@@ -10,7 +10,7 @@ export default function DashboardContacts() {
   const [flash, setFlash] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/contact/${username}`)
+    fetch(`${API_BASE_URL}/api/contact/${username}`)
       .then(res => res.json())
       .then(setSubmissions)
       .catch(() => {
@@ -23,7 +23,7 @@ export default function DashboardContacts() {
     if (!confirmed) return;
 
     try {
-      await fetch(`${API_BASE_URL}/contact/${id}`, {
+      await fetch(`${API_BASE_URL}/api/contact/${id}`, {
         method: "DELETE",
       });
 

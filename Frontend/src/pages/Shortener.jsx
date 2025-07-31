@@ -38,7 +38,7 @@ const Shortener = () => {
 
   const fetchLinks = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/shorten/all/${username}`);
+      const res = await axios.get(`${API_BASE_URL}/api/shorten/all/${username}`);
       setHistory(res.data);
     } catch (err) {
       console.error("Error fetching history", err);
@@ -48,7 +48,7 @@ const Shortener = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_BASE_URL}/shorten/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/shorten/${id}`);
       setHistory((prev) => prev.filter((link) => link.id !== id));
       setFlash({ type: 'success', message: '✅ Short link deleted' });
     } catch (err) {
