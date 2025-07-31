@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaInstagram, FaTwitter, FaLinkedin, FaGithub, FaYoutube } from 'react-icons/fa';
 import FlashMessage from './FlashMessage';
+import { API_BASE_URL } from '../services/api';
 
 const LinkCard = ({
   link,
@@ -17,8 +18,8 @@ const LinkCard = ({
   const [enteredPassword, setEnteredPassword] = useState('');
   const [flash, setFlash] = useState(null);
 
-  const backendBaseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
-
+  const backendBaseUrl = API_BASE_URL;
+  
   const platformIcons = {
     instagram: <FaInstagram />,
     twitter: <FaTwitter />,

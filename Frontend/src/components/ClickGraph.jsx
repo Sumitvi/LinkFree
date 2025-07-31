@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from '../services/api'; 
+
 import {
   BarChart,
   Bar,
@@ -16,8 +18,7 @@ const ClickGraph = ({ username }) => {
   useEffect(() => {
     const fetchClicks = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/links/clicks-summary/${username}`);
-        setData(res.data); 
+      const res = await axios.get(`${API_BASE_URL}/links/clicks-summary/${username}`);        setData(res.data); 
       } catch (err) {
         console.error("Failed to load click data", err);
       }

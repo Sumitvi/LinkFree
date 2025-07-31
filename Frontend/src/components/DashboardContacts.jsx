@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import FlashMessage from '../components/FlashMessage'; 
+import { API_BASE_URL } from '../services/api';
 
 const username = localStorage.getItem("username");
 
@@ -9,7 +10,7 @@ export default function DashboardContacts() {
   const [flash, setFlash] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/contact/${username}`)
+    fetch(`${API_BASE_URL}/contact/${username}`)
       .then(res => res.json())
       .then(setSubmissions)
       .catch(() => {
@@ -22,7 +23,7 @@ export default function DashboardContacts() {
     if (!confirmed) return;
 
     try {
-      await fetch(`http://localhost:8080/api/contact/${id}`, {
+      await fetch(`${API_BASE_URL}/contact/${id}`, {
         method: "DELETE",
       });
 

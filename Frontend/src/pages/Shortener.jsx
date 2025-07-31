@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Trash2, Link as LinkIcon } from "lucide-react";
 import axios from 'axios';
 import FlashMessage from '../components/FlashMessage'; 
+import { API_BASE_URL } from '../services/api';
+
 
 const Shortener = () => {
   const [originalUrl, setOriginalUrl] = useState('');
@@ -17,7 +19,7 @@ const Shortener = () => {
     if (!originalUrl) return;
 
     try {
-      const res = await axios.post(`${API_BASE}/api/shorten`, {
+      const res = await axios.post(`${API_BASE_URL}/shorten`, {
         username,
         originalUrl,
       });
@@ -36,7 +38,7 @@ const Shortener = () => {
 
   const fetchLinks = async () => {
     try {
-      const res = await axios.get(`${API_BASE}/api/shorten/all/${username}`);
+      const res = await axios.get(`${API_BASE_URL}/shorten/all/${username}`);
       setHistory(res.data);
     } catch (err) {
       console.error("Error fetching history", err);
@@ -46,7 +48,7 @@ const Shortener = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_BASE}/api/shorten/${id}`);
+      await axios.delete(`${API_BASE_URL}/shorten/${id}`);
       setHistory((prev) => prev.filter((link) => link.id !== id));
       setFlash({ type: 'success', message: '✅ Short link deleted' });
     } catch (err) {

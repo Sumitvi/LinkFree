@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import FlashMessage from '../components/FlashMessage'; 
+import { API_BASE_URL } from '../services/api';
+
 
 const Register = () => {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
@@ -37,8 +39,7 @@ const Register = () => {
     if (!validateForm()) return;
 
     try {
-      const res = await axios.post('http://localhost:8080/api/auth/register', form);
-      showFlash("✅ Registered successfully!", "success");
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, form);      showFlash("✅ Registered successfully!", "success");
     } catch (err) {
       console.error(err);
       showFlash(err.response?.data || "Registration failed", "error");

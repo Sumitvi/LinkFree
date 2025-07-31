@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getLinkAnalytics } from '../services/api';
 import { Trash2, Pencil, Check, X } from 'lucide-react';
 import FlashMessage from './FlashMessage'; 
+import { API_BASE_URL } from '../services/api';
 
 const LinkRow = ({ link, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +24,7 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
   const handleSave = async () => {
     setLoading(true);
     try {
-      await axios.put(`http://localhost:8080/api/links/${link.id}`, form);
+      await axios.put(`${API_BASE_URL}/links/${link.id}`, form);
       setIsEditing(false);
       onUpdate();
       setFlash({ message: 'Link updated successfully', type: 'success' });
@@ -42,8 +43,7 @@ const LinkRow = ({ link, onDelete, onUpdate }) => {
 
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8080/api/links/${link.id}`);
-      onDelete(link.id);
+      await axios.delete(`${API_BASE_URL}/links/${link.id}`);      onDelete(link.id);
       setFlash({ message: 'Link deleted successfully', type: 'success' });
     } catch (err) {
       setFlash({ message: 'Failed to delete link', type: 'error' });

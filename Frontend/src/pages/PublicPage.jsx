@@ -5,6 +5,7 @@ import LinkCard from '../components/LinkCard';
 import { themes } from '../themes';
 import { FaGithub, FaLinkedin, FaInstagram, FaTwitter } from 'react-icons/fa';
 import FlashMessage from '../components/FlashMessage';
+import { API_BASE_URL } from '../services/api';
 
 const PublicPage = () => {
   const { username } = useParams();
@@ -150,7 +151,7 @@ const PublicPage = () => {
                     phone: formData.get("phone"),
                   };
                   try {
-                    await fetch("http://localhost:8080/api/contact", {
+                    await fetch(`${API_BASE_URL}/contact`, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify(submission),

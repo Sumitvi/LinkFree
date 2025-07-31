@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import FlashMessage from '../components/FlashMessage'; 
+import { API_BASE_URL } from '../services/api';
 
 const Login = ({ setLoggedInUser }) => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -20,8 +21,8 @@ const Login = ({ setLoggedInUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8080/api/auth/login', form);
-      const { token, username, avatarUrl } = res.data;
+    
+        const res = await axios.post(`${API_BASE_URL}/auth/login`, form);      const { token, username, avatarUrl } = res.data;
 
       if (!token || !username) {
         showFlash("Login response incomplete", "error");

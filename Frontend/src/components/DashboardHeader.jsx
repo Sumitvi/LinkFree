@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../services/api'; 
+
 
 const DashboardHeader = () => {
   const [user, setUser] = useState(null);
@@ -10,8 +12,7 @@ const DashboardHeader = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/users/${username}`);
-        setUser(res.data);
+      const res = await axios.get(`${API_BASE_URL}/users/${username}`);        setUser(res.data);
       } catch (err) {
         console.error("Failed to load user", err);
       }

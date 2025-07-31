@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import FlashMessage from './FlashMessage';
+import { API_BASE_URL } from '../services/api'; 
+
 
 const EditLinkModal = ({ link, onClose, onSave }) => {
   const [form, setForm] = useState({ ...link });
@@ -13,8 +15,7 @@ const EditLinkModal = ({ link, onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/links/update/${form.id}`, form); // ✅ Correct
-
+      await axios.put(`${API_BASE_URL}/links/update/${form.id}`, form);
       setFlash({ message: '✅ Link updated successfully!', type: 'success' });
       setTimeout(() => {
         onSave();

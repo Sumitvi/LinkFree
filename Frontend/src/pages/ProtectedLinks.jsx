@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FlashMessage from '../components/FlashMessage';
 import { Save, Shield, Eye, EyeOff } from 'lucide-react';
+import { API_BASE_URL } from '../services/api';
 
 const ProtectedLinks = () => {
   const [links, setLinks] = useState([]);
@@ -13,7 +14,7 @@ const ProtectedLinks = () => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/links/${username}`);
+        const res = await axios.get(`${API_BASE_URL}/links/${username}`);
         setLinks(res.data);
       } catch (err) {
         console.error("Error fetching links", err);
@@ -25,7 +26,7 @@ const ProtectedLinks = () => {
 
   const handlePasswordUpdate = async (id, password) => {
     try {
-      await axios.put(`http://localhost:8080/api/links/${id}/password`, { password });
+      await axios.put(`${API_BASE_URL}/links/${id}/password`, { password });
       setFlash({ type: 'success', message: '✅ Password updated!' });
     } catch (err) {
       console.error("Error updating password", err);
