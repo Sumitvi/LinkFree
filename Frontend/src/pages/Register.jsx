@@ -39,7 +39,7 @@ const Register = () => {
     if (!validateForm()) return;
 
     try {
-      const res = await axios.post(`${API_BASE_URL}/auth/login`, form);      showFlash("✅ Registered successfully!", "success");
+      const res = await axios.post(`${API_BASE_URL}/auth/register`, form);      showFlash("✅ Registered successfully!", "success");
     } catch (err) {
       console.error(err);
       showFlash(err.response?.data || "Registration failed", "error");
