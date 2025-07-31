@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = "https://linkfree-huz0.onrender.com";
-axios.defaults.withCredentials = true;
+export const API_BASE_URL = "https://linkfree-huz0.onrender.com";axios.defaults.withCredentials = true;
 
 // ✅ Set default headers when token is available
 const setAuthHeader = () => {

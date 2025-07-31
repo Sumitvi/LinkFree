@@ -19,7 +19,7 @@ const LinkCard = ({
   const [flash, setFlash] = useState(null);
 
   const backendBaseUrl = API_BASE_URL;
-  
+
   const platformIcons = {
     instagram: <FaInstagram />,
     twitter: <FaTwitter />,
