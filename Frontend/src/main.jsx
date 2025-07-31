@@ -13,8 +13,10 @@ if (token) {
 }
 
 createRoot(document.getElementById('root')).render(
- <GoogleOAuthProvider clientId="794783146331-k0bk90qsqscotqook1vekp363oe11tcq.apps.googleusercontent.com">
+  <StrictMode>
+    <GoogleOAuthProvider clientId="794783146331-k0bk90qsqscotqook1vekp363oe11tcq.apps.googleusercontent.com">
       <App />
-   </GoogleOAuthProvider>
+    </GoogleOAuthProvider>
+  </StrictMode>
 
 )
