@@ -37,6 +37,8 @@ function App() {
           <Route path="protected-links" element={<ProtectedLinks />} />
           <Route path="shorten" element={<Shortener />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+
 
         </Route>
       </Routes>
