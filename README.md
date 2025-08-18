@@ -47,6 +47,11 @@ Share all your important links, customize your profile, track analytics, and mor
 
 ---
 
+
+Deployment - Backend in render
+             Db in neon (PostgreSql)
+             frontend in vercel
+
 ## ⚙️ Getting Started
 
 ### Backend Setup (Spring Boot)
